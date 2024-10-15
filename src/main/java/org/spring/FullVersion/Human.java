@@ -1,47 +1,16 @@
 package org.spring.FullVersion;
 
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Random;
 
 public class Human {
-    public String name;
-    public String surname;
-    public int year;
-    public int iq;
-    public Pet pet;
-    public Human mother;
-    public Human father;
-    public String[][] schedule;
-
-
-    public void greetPet() {
-        System.out.println("Hello, " + this.name);
-    }
-
-    public void describePet() {
-        String slyLevel = pet.trickLevel > 50 ? "very sly" : "almost not sly";
-        System.out.println("I have an " + pet.species + " is " + pet.age + " years old, he is " + slyLevel);
-    }
-
-    public boolean feedPet(boolean timeToFeed) {
-        if (timeToFeed) {
-            System.out.println("Hm... I will feed " + this.name + "'s " + pet.species);
-            return true;
-        } else {
-            Random random = new Random();
-            int randomNumber = random.nextInt(101);
-            //if I want to see randomNumber
-//            System.out.println(randomNumber);
-
-            if (pet.trickLevel > randomNumber) {
-                System.out.println("Hm... I will feed " + this.name + "'s " + pet.species);
-                return true;
-            } else {
-                System.out.println("I think " + this.name + "'s " + this.pet.species + " is not hungry.");
-                return false;
-            }
-        }
-    }
-
+    private String name;
+    private String surname;
+    private int year;
+    private int iq;
+    private Family family;
+    private String[][] schedule;
 
     public Human() {
     }
@@ -56,26 +25,89 @@ public class Human {
         this.name = name;
         this.surname = surname;
         this.year = year;
-        this.father = father;
-        this.mother = mother;
+
     }
 
-    public Human(String name, String surname, int year, int iq, Human mother, Human father, Pet pet, String[][] schedule) {
-        this.father = father;
-        this.iq = iq;
-        this.mother = mother;
+    public Human(String name, String surname, int year, int iq, String[][] schedule) {
         this.name = name;
-        this.pet = pet;
+        this.iq = iq;
         this.schedule = schedule;
         this.surname = surname;
         this.year = year;
     }
 
+
+    public Family getFamily() {
+        return family;
+    }
+
+    public void setFamily(Family family) {
+        this.family = family;
+    }
+
+    public int getIq() {
+        return iq;
+    }
+
+    public void setIq(int iq) {
+        this.iq = iq;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public String[][] getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(String[][] schedule) {
+        this.schedule = schedule;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void greetPet() {
+        System.out.println("Hello, " + this.name);
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Human human = (Human) o;
+        return year == human.year && iq == human.iq && Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.equals(family, human.family) && Objects.deepEquals(schedule, human.schedule);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, surname, year, iq, family, Arrays.deepHashCode(schedule));
+    }
+
     @Override
     public String toString() {
         return "Human{name='" + name + "', surname='" + surname + "', year=" + year + ", iq=" + iq +
-                ", mother=" + mother.name + " " + mother.surname + ", father=" + father.name + " " + father.surname +
-                ", pet=" + pet.toString() + "}";
+                ", schedule=" + Arrays.deepToString(schedule) +
+                "}";
     }
-
 }
