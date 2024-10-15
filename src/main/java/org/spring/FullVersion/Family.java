@@ -112,4 +112,8 @@ public class Family {
                 '}';
     }
 
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
 }
