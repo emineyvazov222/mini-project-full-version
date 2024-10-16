@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Pet {
-    private String species;
+
+
+    private Species species;
     private String nickname;
     private int age;
     private int trickLevel;
@@ -13,12 +15,12 @@ public class Pet {
     public Pet() {
     }
 
-    public Pet(String species, String nickname) {
+    public Pet(Species species, String nickname) {
         this.species = species;
         this.nickname = nickname;
     }
 
-    public Pet(String species, String nickname, int age, int trickLevel, String[] habits) {
+    public Pet(Species species, String nickname, int age, int trickLevel, String[] habits) {
         this.species = species;
         this.nickname = nickname;
         this.age = age;
@@ -50,11 +52,11 @@ public class Pet {
         this.nickname = nickname;
     }
 
-    public String getSpecies() {
+    public Species getSpecies() {
         return species;
     }
 
-    public void setSpecies(String species) {
+    public void setSpecies(Species species) {
         this.species = species;
     }
 
@@ -87,7 +89,15 @@ public class Pet {
                 ", nickname='" + nickname + '\'' +
                 ", trickLevel=" + trickLevel +
                 ", habits=" + Arrays.toString(habits) +
+                ", canFly=" + species.canFly() +
+                ", numberOfLegs=" + species.getNumberOfLegs() +
+                ", hasFur=" + species.hasFur() +
                 '}';
     }
 
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println("Garbage Collector in Pet class ....");
+        super.finalize();
+    }
 }

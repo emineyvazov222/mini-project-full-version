@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Family {
+
     private Human mother;
     private Human father;
     private Human[] children;
@@ -77,10 +78,10 @@ public class Family {
         for (int i = 0, j = 0; i < children.length; i++) {
             if (i != index) {
                 newChildren[j++] = children[i];
-            } else {
-                children[i].setFamily(null);
             }
+
         }
+        children[index].setFamily(null);
         setChildren(newChildren);
         return true;
     }
@@ -108,8 +109,13 @@ public class Family {
                 "children=" + Arrays.toString(children) +
                 ", mother=" + mother +
                 ", father=" + father +
-                ", pet=" + pet.toString() +
+                ", pet=" + pet +
                 '}';
     }
 
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println("Garbage Collector in Family class ....");
+        super.finalize();
+    }
 }
