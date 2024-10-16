@@ -2,8 +2,9 @@ package org.spring.FullVersion;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Random;
 
-public class Family {
+public class Family implements HumanCreator{
 
     private Human mother;
     private Human father;
@@ -117,5 +118,31 @@ public class Family {
     protected void finalize() throws Throwable {
         System.out.println("Garbage Collector in Family class ....");
         super.finalize();
+    }
+
+    @Override
+    public Human bornChild() {
+
+        Random random = new Random();
+
+        String[] boyNames = {"John", "Michael", "David"};
+        String[] girlNames = {"Anna", "Emily", "Sophia"};
+
+        String childName;
+
+        boolean isBoy = random.nextBoolean(); //true or false
+
+        if (isBoy) {
+            childName = boyNames[random.nextInt(boyNames.length)];
+        } else {
+            childName = girlNames[random.nextInt(girlNames.length)];
+        }
+
+        int childIq = (this.mother.getIq() + this.father.getIq()) / 2;
+
+        Human child = isBoy ? new Man(childName, this.father.getSurname(), 2024, childIq, null)
+                : new Woman(childName, this.father.getSurname(), 2024, childIq, null);
+        this.addChild(child);
+        return child;
     }
 }

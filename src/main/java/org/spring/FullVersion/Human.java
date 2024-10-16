@@ -28,7 +28,7 @@ public class Human {
 
     }
 
-    public Human(String name, String surname, int year, int iq, Map<String, String> schedule) {
+    public Human(String name, String surname, int year, int iq, Map<String, String>  schedule) {
         this.name = name;
         this.iq = iq;
         this.schedule = schedule;
