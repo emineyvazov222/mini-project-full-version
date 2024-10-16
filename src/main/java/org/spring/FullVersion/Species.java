@@ -1,6 +1,7 @@
 package org.spring.FullVersion;
 
 public enum Species {
+
     CAT(false, 4, true),
     DOG(false, 4, true),
     BIRD(true, 2, false),

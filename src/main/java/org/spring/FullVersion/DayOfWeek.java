@@ -1,6 +1,7 @@
 package org.spring.FullVersion;
 
 public enum DayOfWeek {
+
     MONDAY,
     TUESDAY,
     WEDNESDAY,
@@ -8,4 +9,5 @@ public enum DayOfWeek {
     FRIDAY,
     SATURDAY,
     SUNDAY
+
 }

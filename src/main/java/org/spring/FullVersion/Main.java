@@ -5,6 +5,8 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
+
+
         String[] arr = {"eat", "drink", "sleep"};
         Pet pet1 = new Pet(Species.CAT, "Ares", 6, 80, arr);
         System.out.println(pet1);
