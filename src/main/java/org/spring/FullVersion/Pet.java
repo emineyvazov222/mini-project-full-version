@@ -28,13 +28,12 @@ public abstract class Pet {
     }
 
     public Pet(String nickname, int age, int trickLevel, String[] habits) {
-    public Pet(Species species, String nickname, int age, int trickLevel, String[] habits) {
-        this.species = species;
         this.nickname = nickname;
         this.age = age;
         this.trickLevel = trickLevel;
         this.habits = habits;
     }
+
 
     public int getAge() {
         return age;
