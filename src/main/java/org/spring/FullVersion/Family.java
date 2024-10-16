@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
-public class Family implements HumanCreator{
+public class Family implements HumanCreator {
 
     private Human mother;
     private Human father;
@@ -130,13 +130,9 @@ public class Family implements HumanCreator{
 
         String childName;
 
-        boolean isBoy = random.nextBoolean(); //true or false
+        boolean isBoy = random.nextBoolean();
 
-        if (isBoy) {
-            childName = boyNames[random.nextInt(boyNames.length)];
-        } else {
-            childName = girlNames[random.nextInt(girlNames.length)];
-        }
+        childName = isBoy ? boyNames[random.nextInt(boyNames.length)] : girlNames[random.nextInt(girlNames.length)];
 
         int childIq = (this.mother.getIq() + this.father.getIq()) / 2;
 

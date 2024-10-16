@@ -20,7 +20,7 @@ public abstract class Pet {
     }
 
     public Pet(Species species, String nickname, int age, int trickLevel, String[] habits) {
-        this.species = Species.UNKNOWN;
+        this.species = (species != null) ? species : Species.UNKNOWN;
         this.nickname = nickname;
         this.age = age;
         this.trickLevel = trickLevel;

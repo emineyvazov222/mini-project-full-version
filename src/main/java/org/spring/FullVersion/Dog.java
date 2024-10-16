@@ -1,6 +1,6 @@
 package org.spring.FullVersion;
 
-public class Dog extends Pet implements Foulable{
+public class Dog extends Pet implements Foulable {
 
     public Dog(String nickname, int age, int trickLevel, String[] habits) {
         super(nickname, age, trickLevel, habits);
