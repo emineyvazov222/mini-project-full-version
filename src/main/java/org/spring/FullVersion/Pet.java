@@ -3,8 +3,7 @@ package org.spring.FullVersion;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Pet {
-
+public abstract class Pet {
 
     private Species species;
     private String nickname;
@@ -21,12 +20,20 @@ public class Pet {
     }
 
     public Pet(Species species, String nickname, int age, int trickLevel, String[] habits) {
-        this.species = species;
+        this.species = (species != null) ? species : Species.UNKNOWN;
         this.nickname = nickname;
         this.age = age;
         this.trickLevel = trickLevel;
         this.habits = habits;
     }
+
+    public Pet(String nickname, int age, int trickLevel, String[] habits) {
+        this.nickname = nickname;
+        this.age = age;
+        this.trickLevel = trickLevel;
+        this.habits = habits;
+    }
+
 
     public int getAge() {
         return age;
@@ -67,6 +74,12 @@ public class Pet {
     public void setTrickLevel(int trickLevel) {
         this.trickLevel = trickLevel;
     }
+
+    public void eat() {
+        System.out.println(nickname + " is eating.");
+    }
+
+    public abstract void respond();
 
     @Override
     public boolean equals(Object o) {
