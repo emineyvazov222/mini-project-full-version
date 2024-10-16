@@ -17,5 +17,4 @@ public final class Woman extends Human {
         System.out.println(getName() + " is putting on makeup.");
     }
 
-
 }

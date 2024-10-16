@@ -1,48 +1,51 @@
 package org.spring.FullVersion;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-
-        Pet dog = new Dog("Buddy", 5, 75, new String[]{"playing", "barking"});
-        Pet cat = new DomesticCat("Whiskers", 3, 50, new String[]{"sleeping", "purring"});
-        Pet fish = new Fish("Nemo", 1, 0, new String[]{"swimming"});
-        Pet roboCat = new RoboCat("Robo", 2, 80, new String[]{"charging", "cleaning"});
-
-        dog.eat();
-        dog.respond();
-        if (dog instanceof Foulable) {
-            ((Foulable) dog).foul();
-        }
-
-        cat.eat();
-        cat.respond();
-        if (cat instanceof Foulable) {
-            ((Foulable) cat).foul();
-        }
-
-        fish.eat();
-        fish.respond();
-
-        roboCat.eat();
-        roboCat.respond();
-        if (roboCat instanceof Foulable) {
-            ((Foulable) roboCat).foul();
-        }
-
 
         Map<String, String> schedule = new HashMap<>();
         schedule.put(DayOfWeek.MONDAY.name(), "Go to work");
         schedule.put(DayOfWeek.TUESDAY.name(), "Gym");
 
-        Man father = new Man("John", "Doe", 1985, 90, schedule);
-        Woman mother = new Woman("Jane", "Doe", 1988, 95, schedule);
+        Human mother = new Woman("Anna", "Smith", 1985, 120, schedule);
+        Human father = new Man("John", "Smith", 1980, 130, schedule);
 
-        Family family = new Family(mother, father);
-        System.out.println(family.bornChild());
 
+        Family family = new Family(father, mother);
+
+        Human child1 = new Man("Michael", "Smith", 2010, 110, schedule);
+        family.addChild(child1);
+
+
+
+        Human newChild = family.bornChild();
+        System.out.println(newChild);
+
+        System.out.println("Ailə üzvləri: ");
+        System.out.println(family);
+
+
+        System.out.println("Uşaqların siyahısı: ");
+        for (Human child : family.getChildren()) {
+            System.out.println(child.getName() + " " + child.getSurname());
+        }
+
+
+        System.out.println("Ailənin üzvlərinin sayı: " + family.countFamily());
+
+
+        Set<Pet> pets = new HashSet<>();
+        Pet dog = new Dog("Rex", 5, 70, Set.of("barking", "running"));
+        pets.add(dog);
+        family.setPet(pets);
+        family.addPet(dog);
+
+        System.out.println("Ev heyvanları: " + family.getPet());
 
     }
 
