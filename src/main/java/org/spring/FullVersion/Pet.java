@@ -97,6 +97,7 @@ public class Pet {
 
     @Override
     protected void finalize() throws Throwable {
+        System.out.println("Garbage Collector in Pet class ....");
         super.finalize();
     }
 }

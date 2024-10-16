@@ -10,7 +10,7 @@ public class Human {
     private int year;
     private int iq;
     private Family family;
-    private Map<DayOfWeek, String> schedule;
+    private Map<String, String> schedule;
 
     public Human() {
     }
@@ -28,7 +28,7 @@ public class Human {
 
     }
 
-    public Human(String name, String surname, int year, int iq, Map<DayOfWeek, String>  schedule) {
+    public Human(String name, String surname, int year, int iq, Map<String, String> schedule) {
         this.name = name;
         this.iq = iq;
         this.schedule = schedule;
@@ -62,11 +62,11 @@ public class Human {
     }
 
 
-    public Map<DayOfWeek, String> getSchedule() {
+    public Map<String, String> getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(Map<DayOfWeek, String>  schedule) {
+    public void setSchedule(Map<String, String> schedule) {
         this.schedule = schedule;
     }
 
@@ -114,6 +114,7 @@ public class Human {
 
     @Override
     protected void finalize() throws Throwable {
+        System.out.println("Garbage Collector in Human class ...");
         super.finalize();
     }
 }

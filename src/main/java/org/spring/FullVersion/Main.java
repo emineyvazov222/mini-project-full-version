@@ -11,9 +11,17 @@ public class Main {
         Pet pet1 = new Pet(Species.CAT, "Ares", 6, 80, arr);
         System.out.println(pet1);
 
-        Map<DayOfWeek, String> schedule = new HashMap<>();
-        schedule.put(DayOfWeek.MONDAY, "go to school");
-        schedule.put(DayOfWeek.TUESDAY, "play football");
+        Map<String, String> schedule = new HashMap<>();
+        schedule.put(DayOfWeek.MONDAY.name(), "go to school");
+        schedule.put(DayOfWeek.TUESDAY.name(), "play football");
+
+        Human human = new Human("Irshad", "Eyvazov", 1995, 95, schedule);
+
+
+        System.out.println("Animal activities:");
+        for (Map.Entry<String, String> entry : schedule.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
 
         Human father = new Human("Elsen", "Eyvazov", 1970, 90, schedule);
         Human mother = new Human("Elnare", "Eyvazova", 1975, 85, schedule);

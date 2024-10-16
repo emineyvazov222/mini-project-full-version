@@ -79,9 +79,9 @@ public class Family {
             if (i != index) {
                 newChildren[j++] = children[i];
             }
-            children[i].setFamily(null);
 
         }
+        children[index].setFamily(null);
         setChildren(newChildren);
         return true;
     }
@@ -115,6 +115,7 @@ public class Family {
 
     @Override
     protected void finalize() throws Throwable {
+        System.out.println("Garbage Collector in Family class ....");
         super.finalize();
     }
 }
