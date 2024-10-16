@@ -6,6 +6,7 @@ public enum Species {
     DOG(false, 4, true),
     BIRD(true, 2, false),
     FISH(false, 0, false),
+    ROBOCAT(false, 4, false),
     SPIDER(false, 8, true),
     UNKNOWN(false, 0, false);
 
