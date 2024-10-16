@@ -128,11 +128,11 @@ public class Family implements HumanCreator {
         String[] boyNames = {"John", "Michael", "David"};
         String[] girlNames = {"Anna", "Emily", "Sophia"};
 
-        String childName;
+
 
         boolean isBoy = random.nextBoolean();
 
-        childName = isBoy ? boyNames[random.nextInt(boyNames.length)] : girlNames[random.nextInt(girlNames.length)];
+        String childName = isBoy ? boyNames[random.nextInt(boyNames.length)] : girlNames[random.nextInt(girlNames.length)];
 
         int childIq = (this.mother.getIq() + this.father.getIq()) / 2;
 
