@@ -8,44 +8,33 @@ import java.util.Set;
 public class Main {
     public static void main(String[] args) {
 
-        Map<String, String> schedule = new HashMap<>();
-        schedule.put(DayOfWeek.MONDAY.name(), "Go to work");
-        schedule.put(DayOfWeek.TUESDAY.name(), "Gym");
-
-        Human mother = new Woman("Anna", "Smith", 1985, 120, schedule);
-        Human father = new Man("John", "Smith", 1980, 130, schedule);
+        FamilyDao familyDao = new CollectionFamilyDao();
+        FamilyService familyService = new FamilyService(familyDao);
+        FamilyController familyController = new FamilyController(familyService);
 
 
-        Family family = new Family(father, mother);
+        Human father = new Human("John", "Doe", 1980);
+        Human mother = new Human("Jane", "Doe", 1982);
+        familyController.createNewFamily(father, mother);
 
-        Human child1 = new Man("Michael", "Smith", 2010, 110, schedule);
-        family.addChild(child1);
+        Human father2 = new Human("John", "Doe", 1981);
+        Human mother2 = new Human("Jane", "Doe", 1983);
+        familyController.createNewFamily(father2, mother2);
 
 
 
-        Human newChild = family.bornChild();
-        System.out.println(newChild);
+        familyController.displayAllFamilies();
 
-        System.out.println("Ailə üzvləri: ");
+        familyController.getFamiliesBiggerThan(0);
+
+
+        Family family = familyController.getFamilyById(0);
         System.out.println(family);
 
-
-        System.out.println("Uşaqların siyahısı: ");
-        for (Human child : family.getChildren()) {
-            System.out.println(child.getName() + " " + child.getSurname());
-        }
+        familyController.bornChild(family, "Michael", "Sarah");
 
 
-        System.out.println("Ailənin üzvlərinin sayı: " + family.countFamily());
-
-
-        Set<Pet> pets = new HashSet<>();
-        Pet dog = new Dog("Rex", 5, 70, Set.of("barking", "running"));
-        pets.add(dog);
-        family.setPet(pets);
-        family.addPet(dog);
-
-        System.out.println("Ev heyvanları: " + family.getPet());
+        familyController.deleteFamilyByIndex(0);
 
     }
 

@@ -1,6 +1,11 @@
 package org.spring.FullVersion;
 
-import java.util.*;
+
+import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 public class Family implements HumanCreator {
 
@@ -73,15 +78,15 @@ public class Family implements HumanCreator {
             return false;
         }
 
-        Human[] newChildren = new Human[children.size() - 1];
+        List<Human> newChildren = List.of(new Human[children.size() - 1]);
         for (int i = 0, j = 0; i < children.size(); i++) {
             if (i != index) {
-                newChildren[j++] = children.get(i);
+                newChildren.set(j++, children.get(i));
             }
 
         }
         children.get(index).setFamily(null);
-        setChildren(List.of(newChildren));
+        setChildren(List.of((Human) newChildren));
         return true;
     }
 
