@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
+
 
 public class Human {
 
@@ -46,14 +46,14 @@ public class Human {
         this.birthDate = birthDate;
     }
 
-    public Human(String name, String surname, String birthDateString, int iq) throws ParseException {
+    public Human(String name, String surname, String birthDateString, int iq) {
         this.name = name;
         this.surname = surname;
         this.iq = iq;
         this.birthDate = convertToMillis(birthDateString);
     }
 
-    private long convertToMillis(String birthDateString) throws ParseException {
+    private long convertToMillis(String birthDateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate birthDate = LocalDate.parse(birthDateString, formatter);
         return birthDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
@@ -140,6 +140,14 @@ public class Human {
                 age.getYears(), age.getMonths(), age.getDays());
     }
 
+    public int getAge() {
+        LocalDate birthDateLocal = Instant.ofEpochMilli(this.birthDate)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        LocalDate currentDate = LocalDate.now();
+        return Period.between(birthDateLocal, currentDate).getYears();
+    }
+
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -153,7 +161,6 @@ public class Human {
         System.out.println("Garbage Collector in Human class ...");
         super.finalize();
     }
-
 
 
 }
