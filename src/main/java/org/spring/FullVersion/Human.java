@@ -2,6 +2,11 @@ package org.spring.FullVersion;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
@@ -49,9 +54,9 @@ public class Human {
     }
 
     private long convertToMillis(String birthDateString) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = dateFormat.parse(birthDateString);
-        return date.getTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate birthDate = LocalDate.parse(birthDateString, formatter);
+        return birthDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
     }
 
@@ -124,14 +129,15 @@ public class Human {
     }
 
     public String describeAge() {
-        long currentMillis = System.currentTimeMillis();
-        long ageInMillis = currentMillis - birthDate;
+        LocalDate birthDate = Instant.ofEpochMilli(this.birthDate)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        LocalDate currentDate = LocalDate.now();
 
-        long years = TimeUnit.MILLISECONDS.toDays(ageInMillis) / 365;
-        long months = (TimeUnit.MILLISECONDS.toDays(ageInMillis) % 365) / 30;
-        long days = (TimeUnit.MILLISECONDS.toDays(ageInMillis) % 365) % 30;
+        Period age = Period.between(birthDate, currentDate);
 
-        return String.format("%d years, %d months, and %d days old", years, months, days);
+        return String.format("%d years, %d months, and %d days old",
+                age.getYears(), age.getMonths(), age.getDays());
     }
 
     @Override
