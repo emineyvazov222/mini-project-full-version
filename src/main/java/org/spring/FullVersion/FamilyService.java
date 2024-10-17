@@ -1,6 +1,6 @@
 package org.spring.FullVersion;
 
-import java.util.Collections;
+
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -78,10 +78,9 @@ public class FamilyService {
     }
 
     public void deleteAllChildrenOlderThen(int age) {
-        for (Family family : familyDao.getAllFamilies()) {
-            family.getChildren().removeIf(child -> Integer.parseInt(child.describeAge()) > age);
-            familyDao.saveFamily(family);
-        }
+        familyDao.getAllFamilies().stream()
+                .peek(family -> family.getChildren().removeIf(child -> Integer.parseInt(child.describeAge()) > age))
+                .forEach(familyDao::saveFamily);
     }
 
 

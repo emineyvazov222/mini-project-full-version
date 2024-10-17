@@ -9,7 +9,6 @@ public class FamilyController {
         this.familyService = familyService;
     }
 
-
     public void createNewFamily(Human father, Human mother) {
      familyService.createNewFamily(father, mother);
     }
