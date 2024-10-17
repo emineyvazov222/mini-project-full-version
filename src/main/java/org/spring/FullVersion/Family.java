@@ -1,15 +1,18 @@
 package org.spring.FullVersion;
 
-import java.util.Arrays;
+
 import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class Family implements HumanCreator {
 
     private Human mother;
     private Human father;
-    private Human[] children;
-    private Pet pet;
+    private List<Human> children;
+    private Set<Pet> pet;
 
     public Family() {
     }
@@ -17,23 +20,23 @@ public class Family implements HumanCreator {
     public Family(Human father, Human mother) {
         this.father = father;
         this.mother = mother;
-        this.children = new Human[0];
+        this.children = new ArrayList<>();
         this.mother.setFamily(this);
         this.father.setFamily(this);
     }
 
-    public Family(Human[] children, Human father, Human mother, Pet pet) {
+    public Family(List<Human> children, Human father, Human mother, Set<Pet> pet) {
         this.children = children;
         this.father = father;
         this.mother = mother;
         this.pet = pet;
     }
 
-    public Human[] getChildren() {
+    public List<Human> getChildren() {
         return children;
     }
 
-    public void setChildren(Human[] children) {
+    public void setChildren(List<Human> children) {
         this.children = children;
     }
 
@@ -55,40 +58,33 @@ public class Family implements HumanCreator {
         mother.setFamily(this);
     }
 
-    public Pet getPet() {
+    public Set<Pet> getPet() {
         return pet;
     }
 
-    public void setPet(Pet pet) {
+    public void setPet(Set<Pet> pet) {
         this.pet = pet;
     }
 
 
     public void addChild(Human child) {
-        Human[] newChildren = Arrays.copyOf(children, children.length + 1);
-        newChildren[children.length] = child;
-        setChildren(newChildren);
+        List<Human> childrenList = new ArrayList<>(children);
+        childrenList.add(child);
+        setChildren(childrenList);
     }
 
     public boolean deleteChild(int index) {
-        if (index < 0 || index >= children.length) {
+        if (index < 0 || index >= children.size()) {
             return false;
         }
 
-        Human[] newChildren = new Human[children.length - 1];
-        for (int i = 0, j = 0; i < children.length; i++) {
-            if (i != index) {
-                newChildren[j++] = children[i];
-            }
-
-        }
-        children[index].setFamily(null);
-        setChildren(newChildren);
+        children.get(index).setFamily(null);
+        children.remove(index);
         return true;
     }
 
     public int countFamily() {
-        return children.length + 2;
+        return children.size() + 2;
     }
 
     @Override
@@ -101,13 +97,13 @@ public class Family implements HumanCreator {
 
     @Override
     public int hashCode() {
-        return Objects.hash(mother, father, Arrays.hashCode(children), pet);
+        return Objects.hash(mother, father, children, pet);
     }
 
     @Override
     public String toString() {
         return "Family{" +
-                "children=" + Arrays.toString(children) +
+                "children=" + children +
                 ", mother=" + mother +
                 ", father=" + father +
                 ", pet=" + pet +
@@ -128,11 +124,11 @@ public class Family implements HumanCreator {
         String[] boyNames = {"John", "Michael", "David"};
         String[] girlNames = {"Anna", "Emily", "Sophia"};
 
-
+        String childName;
 
         boolean isBoy = random.nextBoolean();
 
-        String childName = isBoy ? boyNames[random.nextInt(boyNames.length)] : girlNames[random.nextInt(girlNames.length)];
+        childName = isBoy ? boyNames[random.nextInt(boyNames.length)] : girlNames[random.nextInt(girlNames.length)];
 
         int childIq = (this.mother.getIq() + this.father.getIq()) / 2;
 
@@ -141,4 +137,14 @@ public class Family implements HumanCreator {
         this.addChild(child);
         return child;
     }
+
+    public void addPet(Pet pets) {
+        if (pets != null) {
+            pet.add(pets);
+        } else {
+            System.out.println("Pet cannot be null.");
+        }
+    }
+
+
 }

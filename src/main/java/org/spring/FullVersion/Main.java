@@ -1,48 +1,40 @@
 package org.spring.FullVersion;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
 
-        Pet dog = new Dog("Buddy", 5, 75, new String[]{"playing", "barking"});
-        Pet cat = new DomesticCat("Whiskers", 3, 50, new String[]{"sleeping", "purring"});
-        Pet fish = new Fish("Nemo", 1, 0, new String[]{"swimming"});
-        Pet roboCat = new RoboCat("Robo", 2, 80, new String[]{"charging", "cleaning"});
-
-        dog.eat();
-        dog.respond();
-        if (dog instanceof Foulable) {
-            ((Foulable) dog).foul();
-        }
-
-        cat.eat();
-        cat.respond();
-        if (cat instanceof Foulable) {
-            ((Foulable) cat).foul();
-        }
-
-        fish.eat();
-        fish.respond();
-
-        roboCat.eat();
-        roboCat.respond();
-        if (roboCat instanceof Foulable) {
-            ((Foulable) roboCat).foul();
-        }
+        FamilyDao familyDao = new CollectionFamilyDao();
+        FamilyService familyService = new FamilyService(familyDao);
+        FamilyController familyController = new FamilyController(familyService);
 
 
-        Map<String, String> schedule = new HashMap<>();
-        schedule.put(DayOfWeek.MONDAY.name(), "Go to work");
-        schedule.put(DayOfWeek.TUESDAY.name(), "Gym");
+        Human father = new Human("John", "Doe", 1980);
+        Human mother = new Human("Jane", "Doe", 1982);
+        familyController.createNewFamily(father, mother);
 
-        Man father = new Man("John", "Doe", 1985, 90, schedule);
-        Woman mother = new Woman("Jane", "Doe", 1988, 95, schedule);
+        Human father2 = new Human("John", "Doe", 1981);
+        Human mother2 = new Human("Jane", "Doe", 1983);
+        familyController.createNewFamily(father2, mother2);
 
-        Family family = new Family(mother, father);
-        System.out.println(family.bornChild());
 
+
+        familyController.displayAllFamilies();
+
+        familyController.getFamiliesBiggerThan(0);
+
+
+        Family family = familyController.getFamilyById(0);
+        System.out.println(family);
+
+        familyController.bornChild(family, "Michael", "Sarah");
+
+
+        familyController.deleteFamilyByIndex(0);
 
     }
 

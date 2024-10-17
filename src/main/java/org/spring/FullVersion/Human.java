@@ -1,5 +1,7 @@
 package org.spring.FullVersion;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Map;
 import java.util.Objects;
 
@@ -11,6 +13,7 @@ public class Human {
     private int iq;
     private Family family;
     private Map<String, String> schedule;
+    private int birthDate;
 
     public Human() {
     }
@@ -117,5 +120,11 @@ public class Human {
     protected void finalize() throws Throwable {
         System.out.println("Garbage Collector in Human class ...");
         super.finalize();
+    }
+
+    public int getAge() {
+        LocalDate birthDateLocal = LocalDate.of(birthDate, 1, 1);
+        return Period.between(birthDateLocal, LocalDate.now()).getYears();
+
     }
 }
