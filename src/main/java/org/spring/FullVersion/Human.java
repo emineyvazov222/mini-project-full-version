@@ -97,11 +97,11 @@ public class Human {
         this.surname = surname;
     }
 
-    public long getYear() {
+    public long getBirthDate() {
         return birthDate;
     }
 
-    public void setYear(int year) {
+    public void setBirthDate(int year) {
         this.birthDate = year;
     }
 
