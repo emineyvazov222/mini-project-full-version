@@ -13,7 +13,7 @@ public class Human {
     private int iq;
     private Family family;
     private Map<String, String> schedule;
-    private LocalDate birthDate;
+    private Integer birthDate;
 
     public Human() {
     }
@@ -126,7 +126,9 @@ public class Human {
         if (birthDate == null) {
             throw new IllegalArgumentException("Birth date cannot set.");
         }
-        return Period.between(birthDate, LocalDate.now()).getYears();
+
+        LocalDate birthDateLocal = LocalDate.of(birthDate, 1, 1);
+        return Period.between(birthDateLocal, LocalDate.now()).getYears();
 
     }
 }

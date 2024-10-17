@@ -78,8 +78,8 @@ public class Family implements HumanCreator {
             return false;
         }
 
-        Human removedChild = children.remove(index);
-        removedChild.setFamily(null);
+        children.get(index).setFamily(null);
+        children.remove(index);
         return true;
     }
 

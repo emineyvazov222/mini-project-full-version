@@ -58,24 +58,26 @@ public class FamilyService {
 
     public Family bornChild(Family family, String masculine, String feminine) {
         Human child = new Human();
+        Human father = family.getFather();
         if (Math.random() > 0.5) {
             child.setName(masculine);
         } else {
             child.setName(feminine);
         }
+        child.setSurname(father.getSurname());
+        child.setIq(father.getIq());
+
         family.addChild(child);
         familyDao.saveFamily(family);
+
         return family;
     }
 
     public Family adoptChild(Family family, Human child) {
-        Human father = family.getFather();
-        child.setSurname(father.getSurname());
-        child.setIq(father.getIq());
         family.addChild(child);
         familyDao.saveFamily(family);
-
         return family;
+
     }
 
     public void deleteAllChildrenOlderThen(int age) {
