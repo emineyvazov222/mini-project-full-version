@@ -2,6 +2,7 @@ package org.spring.FullVersion;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class FamilyService {
@@ -17,10 +18,8 @@ public class FamilyService {
     }
 
     public void displayAllFamilies() {
-        List<Family> allFamilies = familyDao.getAllFamilies();
-        for (int i = 0; i < allFamilies.size(); i++) {
-            System.out.println(i + ": " + allFamilies.get(i));
-        }
+        familyDao.getAllFamilies()
+                .forEach(System.out::println);
 
     }
 
@@ -70,14 +69,18 @@ public class FamilyService {
     }
 
     public Family adoptChild(Family family, Human child) {
+        Human father = family.getFather();
+        child.setSurname(father.getSurname());
+        child.setIq(father.getIq());
         family.addChild(child);
         familyDao.saveFamily(family);
+
         return family;
     }
 
     public void deleteAllChildrenOlderThen(int age) {
         for (Family family : familyDao.getAllFamilies()) {
-//            family.getChildren().removeIf(child -> child.getAge() > age);
+            family.getChildren().removeIf(child -> child.getAge() > age);
             familyDao.saveFamily(family);
         }
     }
@@ -91,12 +94,12 @@ public class FamilyService {
         return familyDao.getFamilyByIndex(index);
     }
 
-    public List<Pet> getPets(int index) {
+    public Set<Pet> getPets(int index) {
         Family familyByIndex = familyDao.getFamilyByIndex(index);
         if (familyByIndex != null) {
-            return (List<Pet>) familyByIndex.getPet();
+            return familyByIndex.getPet();
         }
-        return Collections.emptyList();
+        return null;
     }
 
 

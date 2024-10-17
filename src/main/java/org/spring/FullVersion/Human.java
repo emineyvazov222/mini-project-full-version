@@ -1,5 +1,7 @@
 package org.spring.FullVersion;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Map;
 import java.util.Objects;
 
@@ -11,6 +13,7 @@ public class Human {
     private int iq;
     private Family family;
     private Map<String, String> schedule;
+    private LocalDate birthDate;
 
     public Human() {
     }
@@ -119,4 +122,11 @@ public class Human {
         super.finalize();
     }
 
+    public int getAge() {
+        if (birthDate == null) {
+            throw new IllegalArgumentException("Birth date cannot set.");
+        }
+        return Period.between(birthDate, LocalDate.now()).getYears();
+
+    }
 }

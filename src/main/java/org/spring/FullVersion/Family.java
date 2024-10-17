@@ -78,15 +78,8 @@ public class Family implements HumanCreator {
             return false;
         }
 
-        List<Human> newChildren = List.of(new Human[children.size() - 1]);
-        for (int i = 0, j = 0; i < children.size(); i++) {
-            if (i != index) {
-                newChildren.set(j++, children.get(i));
-            }
-
-        }
-        children.get(index).setFamily(null);
-        setChildren(List.of((Human) newChildren));
+        Human removedChild = children.remove(index);
+        removedChild.setFamily(null);
         return true;
     }
 
