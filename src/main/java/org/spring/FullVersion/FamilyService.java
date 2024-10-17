@@ -57,12 +57,13 @@ public class FamilyService {
     }
 
     public Family bornChild(Family family, String masculine, String feminine) {
-        Human father = family.getFather();
+        String surname = family.getFather().getSurname();
+        int childIq = (family.getMother().getIq() + family.getFather().getIq()) / 2;
 
         boolean isMale = Math.random() > 0.5;
         String childName = isMale ? masculine : feminine;
 
-        Human child = isMale ? new Man(childName, father.getSurname(), father.getIq()) : new Woman(childName, father.getSurname(), father.getIq());
+        Human child = isMale ? new Man(childName, surname, childIq) : new Woman(childName, surname, childIq);
 
         family.addChild(child);
         familyDao.saveFamily(family);
