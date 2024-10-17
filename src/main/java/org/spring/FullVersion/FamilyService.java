@@ -79,7 +79,7 @@ public class FamilyService {
 
     public void deleteAllChildrenOlderThen(int age) {
         for (Family family : familyDao.getAllFamilies()) {
-            family.getChildren().removeIf(child -> child.getAge() > age);
+            family.getChildren().removeIf(child -> Integer.parseInt(child.describeAge()) > age);
             familyDao.saveFamily(family);
         }
     }
