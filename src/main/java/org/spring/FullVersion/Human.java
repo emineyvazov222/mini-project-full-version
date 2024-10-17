@@ -1,44 +1,64 @@
 package org.spring.FullVersion;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
+
 
 public class Human {
 
     private String name;
     private String surname;
-    private int year;
+    private long birthDate;
     private int iq;
     private Family family;
     private Map<String, String> schedule;
-    private int birthDate;
+
 
     public Human() {
     }
 
-    public Human(String name, String surname, int year) {
+    public Human(String name, String surname, long birthDate) {
         this.name = name;
         this.surname = surname;
-        this.year = year;
+        this.birthDate = birthDate;
     }
 
-    public Human(String name, String surname, int year, Human father, Human mother) {
+    public Human(String name, String surname, long birthDate, Human father, Human mother) {
         this.name = name;
         this.surname = surname;
-        this.year = year;
+        this.birthDate = birthDate;
 
     }
 
-    public Human(String name, String surname, int year, int iq, Map<String, String>  schedule) {
+    public Human(String name, String surname, long birthDate, int iq, Map<String, String> schedule) {
         this.name = name;
         this.iq = iq;
         this.schedule = schedule;
         this.surname = surname;
-        this.year = year;
+        this.birthDate = birthDate;
     }
 
+    public Human(String name, String surname, String birthDateString, int iq) {
+        this.name = name;
+        this.surname = surname;
+        this.iq = iq;
+        this.birthDate = convertToMillis(birthDateString);
+    }
+
+    private long convertToMillis(String birthDateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate birthDate = LocalDate.parse(birthDateString, formatter);
+        return birthDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
+
+    }
 
 
     public Family getFamily() {
@@ -82,12 +102,12 @@ public class Human {
         this.surname = surname;
     }
 
-    public int getYear() {
-        return year;
+    public long getBirthDate() {
+        return birthDate;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setBirthDate(int year) {
+        this.birthDate = year;
     }
 
     public void greetPet() {
@@ -100,19 +120,39 @@ public class Human {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Human human = (Human) o;
-        return year == human.year && iq == human.iq && Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.equals(family, human.family) && Objects.deepEquals(schedule, human.schedule);
+        return birthDate == human.birthDate && iq == human.iq && Objects.equals(name, human.name) && Objects.equals(surname, human.surname) && Objects.equals(family, human.family) && Objects.deepEquals(schedule, human.schedule);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, year, iq, family, schedule);
+        return Objects.hash(name, surname, birthDate, iq, family, schedule);
+    }
+
+    public String describeAge() {
+        LocalDate birthDate = Instant.ofEpochMilli(this.birthDate)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        LocalDate currentDate = LocalDate.now();
+
+        Period age = Period.between(birthDate, currentDate);
+
+        return String.format("%d years, %d months, and %d days old",
+                age.getYears(), age.getMonths(), age.getDays());
+    }
+
+    public int getAge() {
+        LocalDate birthDateLocal = Instant.ofEpochMilli(this.birthDate)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        LocalDate currentDate = LocalDate.now();
+        return Period.between(birthDateLocal, currentDate).getYears();
     }
 
     @Override
     public String toString() {
-        return "Human{name='" + name + "', surname='" + surname + "', year=" + year + ", iq=" + iq +
-                ", schedule=" + schedule +
-                "}";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return String.format("Name: %s, Surname: %s, Birth Date: %s, IQ: %d",
+                name, surname, dateFormat.format(new Date(birthDate)), iq);
     }
 
 
@@ -122,9 +162,6 @@ public class Human {
         super.finalize();
     }
 
-    public int getAge() {
-        LocalDate birthDateLocal = LocalDate.of(birthDate, 1, 1);
-        return Period.between(birthDateLocal, LocalDate.now()).getYears();
 
-    }
+
 }

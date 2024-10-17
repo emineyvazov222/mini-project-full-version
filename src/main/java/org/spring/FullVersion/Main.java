@@ -12,7 +12,6 @@ public class Main {
         FamilyService familyService = new FamilyService(familyDao);
         FamilyController familyController = new FamilyController(familyService);
 
-
         Human father = new Human("John", "Doe", 1980);
         Human mother = new Human("Jane", "Doe", 1982);
         familyController.createNewFamily(father, mother);
@@ -22,7 +21,6 @@ public class Main {
         familyController.createNewFamily(father2, mother2);
 
 
-
         familyController.displayAllFamilies();
 
         familyController.getFamiliesBiggerThan(0);
@@ -30,6 +28,8 @@ public class Main {
 
         Family family = familyController.getFamilyById(0);
         System.out.println(family);
+
+        System.out.println(mother2.describeAge());
 
         familyController.bornChild(family, "Michael", "Sarah");
 

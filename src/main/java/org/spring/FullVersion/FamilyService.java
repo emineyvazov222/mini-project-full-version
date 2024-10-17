@@ -1,5 +1,8 @@
 package org.spring.FullVersion;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -78,10 +81,16 @@ public class FamilyService {
     }
 
     public void deleteAllChildrenOlderThen(int age) {
-        for (Family family : familyDao.getAllFamilies()) {
+        familyDao.getAllFamilies().forEach(family -> {
             family.getChildren().removeIf(child -> child.getAge() > age);
             familyDao.saveFamily(family);
-        }
+        });
+
+    }
+
+    private LocalDate convertToLocalDate(String birthDateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDate.parse(birthDateString, formatter);
     }
 
 
