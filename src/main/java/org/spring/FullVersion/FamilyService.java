@@ -85,7 +85,7 @@ public class FamilyService {
 
         familyDao.getAllFamilies().stream()
                 .peek(family -> family.getChildren().removeIf(child -> {
-                    LocalDate birthDate = convertToLocalDate(child.describeAge());
+                    LocalDate birthDate = convertToLocalDate(Integer.toString(child.getAge()));
                     int childAge = Period.between(birthDate, currentDate).getYears();
                     return childAge > age;
                 }))

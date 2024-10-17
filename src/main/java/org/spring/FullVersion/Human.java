@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
+
 
 public class Human {
 
@@ -140,6 +140,14 @@ public class Human {
                 age.getYears(), age.getMonths(), age.getDays());
     }
 
+    public int getAge() {
+        LocalDate birthDateLocal = Instant.ofEpochMilli(this.birthDate)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+        LocalDate currentDate = LocalDate.now();
+        return Period.between(birthDateLocal, currentDate).getYears();
+    }
+
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -153,6 +161,7 @@ public class Human {
         System.out.println("Garbage Collector in Human class ...");
         super.finalize();
     }
+
 
 
 }
