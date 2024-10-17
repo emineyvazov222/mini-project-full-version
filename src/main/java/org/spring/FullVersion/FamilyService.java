@@ -81,15 +81,11 @@ public class FamilyService {
     }
 
     public void deleteAllChildrenOlderThen(int age) {
-        LocalDate currentDate = LocalDate.now();
+        familyDao.getAllFamilies().forEach(family -> {
+            family.getChildren().removeIf(child -> child.getAge() > age);
+            familyDao.saveFamily(family);
+        });
 
-        familyDao.getAllFamilies().stream()
-                .peek(family -> family.getChildren().removeIf(child -> {
-                    LocalDate birthDate = convertToLocalDate(Integer.toString(child.getAge()));
-                    int childAge = Period.between(birthDate, currentDate).getYears();
-                    return childAge > age;
-                }))
-                .forEach(familyDao::saveFamily);
     }
 
     private LocalDate convertToLocalDate(String birthDateString) {
