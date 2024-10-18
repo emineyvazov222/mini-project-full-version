@@ -114,4 +114,10 @@ public abstract class Pet {
         System.out.println("Garbage Collector in Pet class ....");
         super.finalize();
     }
+
+    public String prettyFormat() {
+        return String.format("{species=%s, nickname='%s', age=%d, trickLevel=%d, habits=%s}",
+                species, nickname, age, trickLevel, habits);
+
+    }
 }

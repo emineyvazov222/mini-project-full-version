@@ -146,5 +146,20 @@ public class Family implements HumanCreator {
         }
     }
 
+    public String prettyFormat() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("family:\n");
+        sb.append("\tmother: ").append(mother.prettyFormat()).append(",\n");
+        sb.append("\tfather: ").append(father.prettyFormat()).append(",\n");
+        sb.append("\tchildren:\n");
+        for (Human child : children) {
+            sb.append("\t\t").append(child.prettyFormat()).append("\n");
+        }
+        sb.append("\tpets: ").append(pet).append("\n");
+        return sb.toString();
+
+
+    }
+
 
 }
