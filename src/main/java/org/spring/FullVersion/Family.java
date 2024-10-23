@@ -1,6 +1,7 @@
 package org.spring.FullVersion;
 
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.ArrayList;
 import java.util.List;
@@ -144,6 +145,27 @@ public class Family implements HumanCreator {
         } else {
             System.out.println("Pet cannot be null.");
         }
+    }
+
+    public String prettyFormat() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("family:\n");
+        sb.append("\tmother: ").append(mother.prettyFormat()).append(",\n");
+        sb.append("\tfather: ").append(father.prettyFormat()).append(",\n");
+
+        sb.append("\tchildren:\n");
+        for (Human child : children) {
+            String gender = (child instanceof Man) ? "Boy" : "Girl";
+            sb.append(gender).append("\\n\"").append(child.prettyFormat()).append("\n");
+        }
+
+        sb.append("\tpets:\n");
+        for (Pet pets : pet) {
+            sb.append("\t\t").append(pets.prettyFormat()).append("\n");
+        }
+
+        return sb.toString();
+
     }
 
 

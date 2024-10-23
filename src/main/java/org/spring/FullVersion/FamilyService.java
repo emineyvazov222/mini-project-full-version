@@ -2,7 +2,6 @@ package org.spring.FullVersion;
 
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
@@ -98,7 +97,14 @@ public class FamilyService {
     }
 
     public Family getFamilyById(int index) {
-        return familyDao.getFamilyByIndex(index);
+        if (checkId(index)) {
+            return familyDao.getAllFamilies().get(index);
+        }
+        return null;
+    }
+
+    public boolean checkId(int index) {
+        return index >= 0 && index < familyDao.getAllFamilies().size();
     }
 
     public Set<Pet> getPets(int index) {

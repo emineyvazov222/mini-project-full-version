@@ -1,12 +1,13 @@
 package org.spring.FullVersion;
 
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
@@ -25,13 +26,8 @@ public class Human {
     public Human() {
     }
 
-    public Human(String name, String surname, long birthDate) {
-        this.name = name;
-        this.surname = surname;
-        this.birthDate = birthDate;
-    }
 
-    public Human(String name, String surname, long birthDate, Human father, Human mother) {
+    public Human(String name, String surname, long birthDate) {
         this.name = name;
         this.surname = surname;
         this.birthDate = birthDate;
@@ -53,8 +49,24 @@ public class Human {
         this.birthDate = convertToMillis(birthDateString);
     }
 
-    private long convertToMillis(String birthDateString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    public Human(String name, String surname, long birthDate, int iq) {
+        this.name = name;
+        this.surname = surname;
+        this.birthDate = birthDate;
+        this.iq = iq;
+    }
+
+
+    public Human(String fatherName, String fatherSurname, int fatherYear, int fatherMonth, int fatherDay, int fatherIq) {
+        this.name = fatherName;
+        this.surname = fatherSurname;
+        this.birthDate = convertToMillis(fatherYear + "-" + fatherMonth + "-" + fatherDay);
+        this.iq = fatherIq;
+    }
+
+    private long convertToMillis(String birthDateString) throws DateTimeParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate birthDate = LocalDate.parse(birthDateString, formatter);
         return birthDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
@@ -111,6 +123,7 @@ public class Human {
     }
 
     public void greetPet() {
+
         System.out.println("Hello, " + this.name);
     }
 
@@ -160,6 +173,12 @@ public class Human {
     protected void finalize() throws Throwable {
         System.out.println("Garbage Collector in Human class ...");
         super.finalize();
+    }
+
+    public String prettyFormat() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return String.format("{name='%s', surname='%s', birthDate='%s', iq=%d, schedule=%s}",
+                name, surname, dateFormat.format(new Date(birthDate)), iq, schedule);
     }
 
 

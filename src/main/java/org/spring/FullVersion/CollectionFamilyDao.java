@@ -1,5 +1,6 @@
 package org.spring.FullVersion;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,7 @@ public class CollectionFamilyDao implements FamilyDao {
 
     @Override
     public List<Family> getAllFamilies() {
-        return families;
+        return new ArrayList<>(families);
     }
 
     @Override
@@ -38,7 +39,6 @@ public class CollectionFamilyDao implements FamilyDao {
     @Override
     public void saveFamily(Family family) {
         int index = families.indexOf(family);
-
         if (index >= 0) {
             families.set(index, family);
         } else {
@@ -46,6 +46,8 @@ public class CollectionFamilyDao implements FamilyDao {
         }
 
 
-
     }
+
+
+
 }
