@@ -15,7 +15,7 @@ public interface FamilyDao {
 
     void saveFamily(Family family);
 
-    boolean existsById(int index);
+
 
 
 }

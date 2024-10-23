@@ -21,18 +21,11 @@ public class Human {
     private int iq;
     private Family family;
     private Map<String, String> schedule;
-    private String gender;
 
 
     public Human() {
     }
 
-    public Human(String name, String surname, long birthDate, String gender) {
-        this.name = name;
-        this.surname = surname;
-        this.birthDate = birthDate;
-        this.gender = gender;
-    }
 
     public Human(String name, String surname, long birthDate) {
         this.name = name;
@@ -185,7 +178,7 @@ public class Human {
     public String prettyFormat() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return String.format("{name='%s', surname='%s', birthDate='%s', iq=%d, schedule=%s}",
-                name, surname, dateFormat.format(new Date(birthDate)), iq, schedule, gender);
+                name, surname, dateFormat.format(new Date(birthDate)), iq, schedule);
     }
 
 

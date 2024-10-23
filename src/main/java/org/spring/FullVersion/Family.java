@@ -155,7 +155,8 @@ public class Family implements HumanCreator {
 
         sb.append("\tchildren:\n");
         for (Human child : children) {
-            sb.append("\t\t").append(child.prettyFormat()).append("\n");
+            String gender = (child instanceof Man) ? "Boy" : "Girl";
+            sb.append(gender).append("\\n\"").append(child.prettyFormat()).append("\n");
         }
 
         sb.append("\tpets:\n");

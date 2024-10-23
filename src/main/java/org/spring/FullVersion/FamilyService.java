@@ -97,10 +97,14 @@ public class FamilyService {
     }
 
     public Family getFamilyById(int index) {
-        if (familyDao.existsById(index)) {
+        if (checkId(index)) {
             return familyDao.getAllFamilies().get(index);
         }
         return null;
+    }
+
+    public boolean checkId(int index) {
+        return index >= 0 && index < familyDao.getAllFamilies().size();
     }
 
     public Set<Pet> getPets(int index) {
