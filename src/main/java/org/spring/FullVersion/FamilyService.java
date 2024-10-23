@@ -4,7 +4,6 @@ package org.spring.FullVersion;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -98,7 +97,7 @@ public class FamilyService {
     }
 
     public Family getFamilyById(int index) {
-        if (index >= 0 && index < familyDao.getAllFamilies().size()) {
+        if (familyDao.existsById(index)) {
             return familyDao.getAllFamilies().get(index);
         }
         return null;
@@ -120,5 +119,6 @@ public class FamilyService {
             familyDao.saveFamily(family);
         }
     }
+
 
 }

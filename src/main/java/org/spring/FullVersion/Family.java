@@ -1,6 +1,7 @@
 package org.spring.FullVersion;
 
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.ArrayList;
 import java.util.List;
@@ -156,7 +157,7 @@ public class Family implements HumanCreator {
         for (Human child : children) {
             sb.append("\t\t").append(child.prettyFormat()).append("\n");
         }
-        
+
         sb.append("\tpets:\n");
         for (Pet pets : pet) {
             sb.append("\t\t").append(pets.prettyFormat()).append("\n");

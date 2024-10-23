@@ -1,19 +1,21 @@
 package org.spring.FullVersion;
 
+
 import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
-    private static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) throws FamilyOverflowException {
+    private static final Scanner scanner = new Scanner(System.in);
 
-        Human father = new Human("John", "Doe", 1980);
-        Human mother = new Human("Jane", "Doe", 1982);
-
+    public static void main(String[] args) {
 
         FamilyService familyService = new FamilyService(new CollectionFamilyDao());
+        handleUserInput(scanner, familyService);
 
+    }
+
+    public static void handleUserInput(Scanner scanner, FamilyService familyService) {
         while (true) {
             displayMenu();
             String command = Main.getInput("Enter your choice: ");
@@ -26,29 +28,29 @@ public class Main {
                     familyService.displayAllFamilies();
                     break;
                 case "3":
-                    int greaterThan = Main.getInputInt("Enter the number of people: ");
+                    int greaterThan = getInputInt("Enter the number of people: ");
                     familyService.getFamiliesBiggerThan(greaterThan);
                     break;
                 case "4":
-                    int lessThan = Main.getInputInt("Enter the number of people: ");
+                    int lessThan = getInputInt("Enter the number of people: ");
                     familyService.getFamiliesLessThan(lessThan);
                     break;
                 case "5":
-                    int countNumber= Main.getInputInt("Enter the number of people: ");
+                    int countNumber = getInputInt("Enter the number of people: ");
                     System.out.println("Number of families: " + familyService.countFamiliesWithMemberNumber(countNumber));
                     break;
                 case "6":
                     createNewFamily(scanner, familyService);
                     break;
                 case "7":
-                   int id = Main.getInputInt("Enter the family id: ");
+                    int id = getInputInt("Enter the family id: ");
                     familyService.deleteFamilyByIndex(id);
                     break;
                 case "8":
                     editFamilyMenu(scanner, familyService);
                     break;
                 case "9":
-                    int age= Main.getInputInt("Enter the age: ");
+                    int age = getInputInt("Enter the age: ");
                     familyService.deleteAllChildrenOlderThen(age);
                     break;
                 case "exit":
@@ -63,12 +65,14 @@ public class Main {
     public static int getInputInt(String prompt) {
         int input;
         while (true) {
-            try {
-                System.out.print(prompt);
-                input = Integer.parseInt(scanner.nextLine().trim());
+            System.out.print(prompt);
+            if (scanner.hasNextInt()) {
+                input = scanner.nextInt();
+                scanner.nextLine();
                 break;
-            } catch (NumberFormatException e) {
+            } else {
                 System.out.println("Invalid input. Please enter a valid number.");
+                scanner.nextLine();
             }
         }
         return input;
@@ -106,41 +110,34 @@ public class Main {
     }
 
     private static void createNewFamily(Scanner scanner, FamilyService familyService) {
-
-        System.out.println("Enter mother's name: ");
-        String motherName = scanner.nextLine();
-        System.out.println("Enter mother's surname: ");
-        String motherSurname = scanner.nextLine();
-        System.out.println("Enter mother's birth year: ");
-        int motherYear = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter mother's birth month: ");
-        int motherMonth = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter mother's birthday: ");
-        int motherDay = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter mother's IQ: ");
-        int motherIq = Integer.parseInt(scanner.nextLine());
-
-        LocalDate motherBirthDate = LocalDate.of(motherYear, motherMonth, motherDay);
-        Human mother = new Human(motherName, motherSurname, String.valueOf(motherBirthDate), motherIq);
-
-        System.out.println("Enter father's name: ");
-        String fatherName = scanner.nextLine();
-        System.out.println("Enter father's surname: ");
-        String fatherSurname = scanner.nextLine();
-        System.out.println("Enter father's birth year: ");
-        int fatherYear = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter father's birth month: ");
-        int fatherMonth = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter father's birthday: ");
-        int fatherDay = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter father's IQ: ");
-        int fatherIq = Integer.parseInt(scanner.nextLine());
-
-        LocalDate fatherBirthDate = LocalDate.of(fatherYear, fatherMonth, fatherDay);
-        Human father = new Human(fatherName, fatherSurname, String.valueOf(fatherBirthDate), fatherIq);
-
+        Human father = createFather();
+        Human mother = createMother();
         familyService.createNewFamily(mother, father);
         System.out.println("New family created.");
+    }
+
+    public static Human createFather() {
+        String fatherName = getInput("Enter father's name: ");
+        String fatherSurname = getInput("Enter father's surname: ");
+        int fatherYear = getInputInt("Enter father's birth year: ");
+        int fatherMonth = getInputInt("Enter father's birth month: ");
+        int fatherDay = getInputInt("Enter father's birthday: ");
+        int fatherIq = getInputInt("Enter father's IQ: ");
+
+        LocalDate fatherBirthDate = LocalDate.of(fatherYear, fatherMonth, fatherDay);
+        return new Human(fatherName, fatherSurname, String.valueOf(fatherBirthDate), fatherIq);
+    }
+
+    public static Human createMother() {
+        String motherName = getInput("Enter mother's name: ");
+        String motherSurname = getInput("Enter mother's surname: ");
+        int motherYear = getInputInt("Enter mother's birth year: ");
+        int motherMonth = getInputInt("Enter mother's birth month: ");
+        int motherDay = getInputInt("Enter mother's birthday: ");
+        int motherIq = getInputInt("Enter mother's IQ: ");
+
+        LocalDate motherBirthDate = LocalDate.of(motherYear, motherMonth, motherDay);
+        return new Human(motherName, motherSurname, String.valueOf(motherBirthDate), motherIq);
     }
 
     private static void editFamilyMenu(Scanner scanner, FamilyService familyService) {
@@ -151,35 +148,56 @@ public class Main {
         String command = scanner.nextLine();
         switch (command) {
             case "1":
-                System.out.println("Enter family ID: ");
-                int familyId = Integer.parseInt(scanner.nextLine());
-                Family family = familyService.getFamilyById(familyId);
-                if (family == null) {
-                    System.out.println("Family with ID " + familyId + " not found.");
-                    break;
-                }
-                System.out.println("Enter boy's name: ");
-                String boyName = scanner.nextLine();
-                System.out.println("Enter girl's name: ");
-                String girlName = scanner.nextLine();
-                familyService.bornChild(family, boyName, girlName);
+                giveBirthToChild(scanner, familyService);
                 break;
             case "2":
+                adoptChild(scanner, familyService);
+                break;
+            case "3":
+                return;
+            default:
+                System.out.println("Invalid command. Please try again.");
+        }
 
-                System.out.println("Enter family ID: ");
-                familyId = Integer.parseInt(scanner.nextLine());
-                System.out.println("Enter child's name: ");
-                String childName = scanner.nextLine();
-                System.out.println("Enter child's surname: ");
-                String childSurname = scanner.nextLine();
-                System.out.println("Enter child's birth year: ");
-                int childYear = Integer.parseInt(scanner.nextLine());
-                System.out.println("Enter child's IQ: ");
-                int childIq = Integer.parseInt(scanner.nextLine());
-                Human child = new Human(childName, childSurname, childYear, 0, 0, childIq); // Assuming month/day is not needed
-                family = familyService.getFamilyById(familyId);
-                familyService.adoptChild(family, child);
+    }
 
+    private static void giveBirthToChild(Scanner scanner, FamilyService familyService) {
+        System.out.println("Enter family ID: ");
+        int familyId = Integer.parseInt(scanner.nextLine());
+        Family family = familyService.getFamilyById(familyId);
+        if (family == null) {
+            System.out.println("Family with ID " + familyId + " not found.");
+            return;
+        }
+        System.out.println("Enter boy's name: ");
+        String boyName = scanner.nextLine();
+        System.out.println("Enter girl's name: ");
+        String girlName = scanner.nextLine();
+        familyService.bornChild(family, boyName, girlName);
+    }
+
+    private static void adoptChild(Scanner scanner, FamilyService familyService) {
+        System.out.println("Enter family ID: ");
+        int familyId = Integer.parseInt(scanner.nextLine());
+        System.out.println("Enter child's name: ");
+        String childName = scanner.nextLine();
+        System.out.println("Enter child's surname: ");
+        String childSurname = scanner.nextLine();
+        System.out.println("Enter child's birth year: ");
+        int childYear = Integer.parseInt(scanner.nextLine());
+        System.out.println("Enter child's IQ: ");
+        int childIq = Integer.parseInt(scanner.nextLine());
+
+        Human child = new Human(childName, childSurname, childYear, 0, 0, childIq); // Assuming month/day is not needed
+        Family family = familyService.getFamilyById(familyId);
+        if (family != null) {
+            familyService.adoptChild(family, child);
+        } else {
+            System.out.println("Family with ID " + familyId + " not found.");
         }
     }
+
 }
+
+
+

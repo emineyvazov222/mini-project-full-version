@@ -1,8 +1,6 @@
 package org.spring.FullVersion;
 
 
-
-
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -23,18 +21,20 @@ public class Human {
     private int iq;
     private Family family;
     private Map<String, String> schedule;
+    private String gender;
 
 
     public Human() {
     }
 
-    public Human(String name, String surname, long birthDate) {
+    public Human(String name, String surname, long birthDate, String gender) {
         this.name = name;
         this.surname = surname;
         this.birthDate = birthDate;
+        this.gender = gender;
     }
 
-    public Human(String name, String surname, long birthDate, Human father, Human mother) {
+    public Human(String name, String surname, long birthDate) {
         this.name = name;
         this.surname = surname;
         this.birthDate = birthDate;
@@ -56,13 +56,7 @@ public class Human {
         this.birthDate = convertToMillis(birthDateString);
     }
 
-    public Human(String childName, String childSurname, int childYear, int childIq) {
-        this.name = childName;
-        this.surname = childSurname;
-        this.iq = childIq;
-        this.birthDate = childYear;
 
-    }
     public Human(String name, String surname, long birthDate, int iq) {
         this.name = name;
         this.surname = surname;
@@ -191,7 +185,7 @@ public class Human {
     public String prettyFormat() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return String.format("{name='%s', surname='%s', birthDate='%s', iq=%d, schedule=%s}",
-                name, surname, dateFormat.format(new Date(birthDate)), iq, schedule);
+                name, surname, dateFormat.format(new Date(birthDate)), iq, schedule, gender);
     }
 
 
