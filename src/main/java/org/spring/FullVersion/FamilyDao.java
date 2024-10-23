@@ -15,7 +15,9 @@ public interface FamilyDao {
 
     void saveFamily(Family family);
 
+    void saveData(List<Family> families);
 
+    List<Family> loadData();
 
 
 }

@@ -124,5 +124,16 @@ public class FamilyService {
         }
     }
 
+    public void saveFamilies() {
+        familyDao.saveData(familyDao.getAllFamilies());
+    }
+
+    public void loadFamilies() {
+        List<Family> loadedFamilies = familyDao.loadData();
+        if (loadedFamilies != null) {
+            familyDao.saveData(loadedFamilies);
+        }
+    }
+
 
 }

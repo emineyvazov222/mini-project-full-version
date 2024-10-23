@@ -23,9 +23,11 @@ public class Main {
             switch (command) {
                 case "1":
                     fillWithTestData(familyService);
+                    Logger.info("Filled with test data.");
                     break;
                 case "2":
                     familyService.displayAllFamilies();
+                    Logger.info("Displayed the entire list of families.");
                     break;
                 case "3":
                     int greaterThan = getInputInt("Enter the number of people: ");
@@ -41,17 +43,29 @@ public class Main {
                     break;
                 case "6":
                     createNewFamily(scanner, familyService);
+                    Logger.info("Created a new family.");
                     break;
                 case "7":
                     int id = getInputInt("Enter the family id: ");
                     familyService.deleteFamilyByIndex(id);
+                    Logger.info("Deleted a family by ID.");
                     break;
                 case "8":
                     editFamilyMenu(scanner, familyService);
+                    Logger.info("Edited a family.");
                     break;
                 case "9":
                     int age = getInputInt("Enter the age: ");
                     familyService.deleteAllChildrenOlderThen(age);
+                    Logger.info("Removed all children over the specified age.");
+                    break;
+                case "10":
+                    familyService.saveFamilies();
+                    Logger.info("Saved families to file.");
+                    break;
+                case "11":
+                    familyService.loadFamilies();
+                    Logger.info("Loaded families from file.");
                     break;
                 case "exit":
                     System.out.println("Exiting the application.");
@@ -94,6 +108,8 @@ public class Main {
         System.out.println("7. Delete a family by ID");
         System.out.println("8. Edit a family");
         System.out.println("9. Remove all children over the specified age");
+        System.out.println("10. Save families to file");
+        System.out.println("11. Load families from file");
         System.out.println("Type 'exit' to exit");
     }
 

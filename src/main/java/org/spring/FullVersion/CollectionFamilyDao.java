@@ -1,6 +1,7 @@
 package org.spring.FullVersion;
 
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +49,27 @@ public class CollectionFamilyDao implements FamilyDao {
 
     }
 
+    @Override
+    public void saveData(List<Family> families) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("families.dat"))) {
+            oos.writeObject(families);
+            System.out.println("Data saved to file.");
+        } catch (IOException e) {
+            System.err.println("Error saving data: " + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public List<Family> loadData() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("families.dat"))) {
+            families = (List<Family>) ois.readObject();
+            System.out.println("Data loaded from file.");
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error loading data: " + e.getMessage());
+        }
+        return families;
+    }
 
 
 }
