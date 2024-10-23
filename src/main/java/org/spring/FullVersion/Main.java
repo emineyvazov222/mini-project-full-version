@@ -4,18 +4,19 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
+    private static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) throws FamilyOverflowException {
 
         Human father = new Human("John", "Doe", 1980);
         Human mother = new Human("Jane", "Doe", 1982);
 
-        Scanner scanner = new Scanner(System.in);
+
         FamilyService familyService = new FamilyService(new CollectionFamilyDao());
 
         while (true) {
             displayMenu();
-            System.out.print("Enter your choice: ");
-            String command = scanner.nextLine();
+            String command = Main.getInput("Enter your choice: ");
 
             switch (command) {
                 case "1":
@@ -25,35 +26,29 @@ public class Main {
                     familyService.displayAllFamilies();
                     break;
                 case "3":
-                    System.out.println("Enter the number of people: ");
-                    int greaterThan = Integer.parseInt(scanner.nextLine());
+                    int greaterThan = Main.getInputInt("Enter the number of people: ");
                     familyService.getFamiliesBiggerThan(greaterThan);
                     break;
                 case "4":
-                    System.out.println("Enter the number of people: ");
-                    int lessThan = Integer.parseInt(scanner.nextLine());
+                    int lessThan = Main.getInputInt("Enter the number of people: ");
                     familyService.getFamiliesLessThan(lessThan);
                     break;
                 case "5":
-                    System.out.println("Enter the number of members: ");
-                    int countNumber = Integer.parseInt(scanner.nextLine());
+                    int countNumber= Main.getInputInt("Enter the number of people: ");
                     System.out.println("Number of families: " + familyService.countFamiliesWithMemberNumber(countNumber));
                     break;
                 case "6":
                     createNewFamily(scanner, familyService);
                     break;
                 case "7":
-                    System.out.println("Enter family index: ");
-                    int id = Integer.parseInt(scanner.nextLine());
+                   int id = Main.getInputInt("Enter the family id: ");
                     familyService.deleteFamilyByIndex(id);
                     break;
                 case "8":
                     editFamilyMenu(scanner, familyService);
                     break;
                 case "9":
-
-                    System.out.println("Enter the age to remove children: ");
-                    int age = Integer.parseInt(scanner.nextLine());
+                    int age= Main.getInputInt("Enter the age: ");
                     familyService.deleteAllChildrenOlderThen(age);
                     break;
                 case "exit":
@@ -63,6 +58,25 @@ public class Main {
                     System.out.println("Invalid command. Please try again.");
             }
         }
+    }
+
+    public static int getInputInt(String prompt) {
+        int input;
+        while (true) {
+            try {
+                System.out.print(prompt);
+                input = Integer.parseInt(scanner.nextLine().trim());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
+        return input;
+    }
+
+    public static String getInput(String prompt) {
+        System.out.print(prompt);
+        return scanner.nextLine().trim();
     }
 
     private static void displayMenu() {
@@ -84,8 +98,8 @@ public class Main {
         LocalDate motherBirthDate = LocalDate.of(1991, 3, 3);
         LocalDate fatherBirthDate = LocalDate.of(1990, 12, 10);
 
-        Human mother = new Human("Kate", "Bibo", motherBirthDate, 95);
-        Human father = new Human("Karl", "Bibo", fatherBirthDate, 90);
+        Human mother = new Human("Kate", "Bibo", String.valueOf(motherBirthDate), 95);
+        Human father = new Human("Karl", "Bibo", String.valueOf(fatherBirthDate), 90);
 
         familyService.createNewFamily(mother, father);
         System.out.println("Test data filled.");

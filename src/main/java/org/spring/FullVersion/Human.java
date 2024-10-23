@@ -1,7 +1,8 @@
 package org.spring.FullVersion;
 
 
-import java.text.ParseException;
+
+
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -62,10 +63,10 @@ public class Human {
         this.birthDate = childYear;
 
     }
-    public Human(String name, String surname, LocalDate birthDate, int iq) {
+    public Human(String name, String surname, long birthDate, int iq) {
         this.name = name;
         this.surname = surname;
-        this.birthDate = birthDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        this.birthDate = birthDate;
         this.iq = iq;
     }
 
@@ -78,7 +79,7 @@ public class Human {
     }
 
     private long convertToMillis(String birthDateString) throws DateTimeParseException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate birthDate = LocalDate.parse(birthDateString, formatter);
         return birthDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
 
@@ -135,6 +136,7 @@ public class Human {
     }
 
     public void greetPet() {
+
         System.out.println("Hello, " + this.name);
     }
 
@@ -187,8 +189,9 @@ public class Human {
     }
 
     public String prettyFormat() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return String.format("{name='%s', surname='%s', birthDate='%s', iq=%d, schedule=%s}",
-                name, surname, getAge(), iq, schedule);
+                name, surname, dateFormat.format(new Date(birthDate)), iq, schedule);
     }
 
 
