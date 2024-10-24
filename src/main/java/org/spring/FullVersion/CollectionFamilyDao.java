@@ -1,11 +1,17 @@
 package org.spring.FullVersion;
 
 
-import java.io.*;
+import java.io.IOException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CollectionFamilyDao implements FamilyDao {
+
+    private static final String FILE_PATH = "families.dat";
 
     private List<Family> families = new ArrayList<>();
 
@@ -50,25 +56,17 @@ public class CollectionFamilyDao implements FamilyDao {
     }
 
     @Override
-    public void saveData(List<Family> families) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("families.dat"))) {
+    public void saveData(List<Family> families) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
             oos.writeObject(families);
-            System.out.println("Data saved to file.");
-        } catch (IOException e) {
-            System.err.println("Error saving data: " + e.getMessage());
         }
-
     }
 
     @Override
-    public List<Family> loadData() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("families.dat"))) {
-            families = (List<Family>) ois.readObject();
-            System.out.println("Data loaded from file.");
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error loading data: " + e.getMessage());
+    public List<Family> loadData() throws IOException, ClassNotFoundException {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
+            return (List<Family>) ois.readObject();
         }
-        return families;
     }
 
 

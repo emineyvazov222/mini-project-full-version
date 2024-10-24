@@ -1,6 +1,7 @@
 package org.spring.FullVersion;
 
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -126,14 +127,17 @@ public class FamilyService {
 
     public void saveFamilies() {
         familyDao.saveData(familyDao.getAllFamilies());
+        Logger.info("Families successfully saved to file.");
+
+
     }
 
     public void loadFamilies() {
         List<Family> loadedFamilies = familyDao.loadData();
         if (loadedFamilies != null) {
             familyDao.saveData(loadedFamilies);
+            Logger.info("Families successfully loaded from file.");
         }
+
     }
-
-
 }

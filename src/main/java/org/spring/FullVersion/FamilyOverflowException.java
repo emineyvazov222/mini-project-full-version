@@ -1,7 +1,7 @@
 package org.spring.FullVersion;
 
-public class FamilyOverflowException extends RuntimeException {
-    public FamilyOverflowException(String message) {
+public class FamilyOverflowException extends Exception {
+    public FamilyOverflowException(String message, Exception e) {
         super(message);
     }
 }
