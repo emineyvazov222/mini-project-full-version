@@ -1,6 +1,7 @@
 package org.spring.FullVersion;
 
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 
 
-public class Human {
+public class Human implements Serializable {
 
     private String name;
     private String surname;
