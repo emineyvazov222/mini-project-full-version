@@ -1,11 +1,7 @@
 package org.spring.FullVersion;
 
 
-import java.io.IOException;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +59,7 @@ public class CollectionFamilyDao implements FamilyDao {
     }
 
     @Override
-    public List<Family> loadData() throws IOException, ClassNotFoundException {
+    public List<Family> loadData() throws IOException, ClassNotFoundException{
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
             return (List<Family>) ois.readObject();
         }
