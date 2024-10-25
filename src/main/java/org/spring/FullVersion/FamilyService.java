@@ -1,6 +1,8 @@
 package org.spring.FullVersion;
 
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -124,5 +126,28 @@ public class FamilyService {
         }
     }
 
+    public void saveFamilies() {
+        try {
+            familyDao.saveData(familyDao.getAllFamilies());
+            Logger.info("Families successfully saved to file.");
+        } catch (IOException e) {
+            Logger.error("Error saving families to file: " + e.getMessage());
+        }
 
+
+    }
+
+    public void loadFamilies() {
+        try {
+            List<Family> loadedFamilies = familyDao.loadData();
+            if (loadedFamilies != null) {
+                familyDao.saveData(loadedFamilies);
+                Logger.info("Families successfully loaded from file.");
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            Logger.error("Error loading families from file: " + e.getMessage());
+
+        }
+
+    }
 }

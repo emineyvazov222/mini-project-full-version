@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class Family implements HumanCreator {
+public class Family implements HumanCreator, Serializable {
 
     private Human mother;
     private Human father;

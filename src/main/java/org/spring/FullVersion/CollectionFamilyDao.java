@@ -1,10 +1,13 @@
 package org.spring.FullVersion;
 
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CollectionFamilyDao implements FamilyDao {
+
+    private static final String FILE_PATH = "families.dat";
 
     private List<Family> families = new ArrayList<>();
 
@@ -48,6 +51,19 @@ public class CollectionFamilyDao implements FamilyDao {
 
     }
 
+    @Override
+    public void saveData(List<Family> families) throws IOException {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
+            oos.writeObject(families);
+        }
+    }
+
+    @Override
+    public List<Family> loadData() throws IOException, ClassNotFoundException{
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FILE_PATH))) {
+            return (List<Family>) ois.readObject();
+        }
+    }
 
 
 }
